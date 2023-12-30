@@ -1814,6 +1814,36 @@
         "skillIcon": "Skill_E_Furina_01",
         "proudSkillGroupId": 8939
     },
+    "10901": {
+        "nameTextMapHash": 1264627869,
+        "skillIcon": "Skill_A_03",
+        "proudSkillGroupId": 9031
+    },
+    "10902": {
+        "nameTextMapHash": 2811155029,
+        "skillIcon": "Skill_S_Chevreuse_01",
+        "proudSkillGroupId": 9032
+    },
+    "10905": {
+        "nameTextMapHash": 1517901117,
+        "skillIcon": "Skill_E_Chevreuse_01",
+        "proudSkillGroupId": 9039
+    },
+    "10911": {
+        "nameTextMapHash": 2696840005,
+        "skillIcon": "Skill_A_04",
+        "proudSkillGroupId": 9131
+    },
+    "10912": {
+        "nameTextMapHash": 4005542485,
+        "skillIcon": "Skill_S_Navia_01",
+        "proudSkillGroupId": 9132
+    },
+    "10915": {
+        "nameTextMapHash": 3301203725,
+        "skillIcon": "Skill_E_Navia_01",
+        "proudSkillGroupId": 9139
+    },
     "20001": {
         "nameTextMapHash": 1936482797,
         "skillIcon": "Skill_A_Dvalin_AirGun",
@@ -2862,6 +2892,16 @@
     "5089010": {
         "nameTextMapHash": 3507937933,
         "skillIcon": "Skill_A_01",
+        "proudSkillGroupId": ""
+    },
+    "5090010": {
+        "nameTextMapHash": 1182583677,
+        "skillIcon": "Skill_A_03",
+        "proudSkillGroupId": ""
+    },
+    "5091010": {
+        "nameTextMapHash": 1292719181,
+        "skillIcon": "Skill_A_04",
         "proudSkillGroupId": ""
     }
 }
