@@ -6,9 +6,6 @@ import sys
 
 from dotenv import load_dotenv
 
-# Load .env file
-load_dotenv()
-
 from utils import (
     request,
     download_json,
@@ -18,21 +15,25 @@ from utils import (
     save_data
 )
 
-# API GIT
-GIT2="https://gitlab.com/api/v4/{PATH}"
-RAW_GIT2 = "https://gitlab.com/{PATH}"
+
+# Load .env file
+load_dotenv()
 
 # Logging
 logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
+# API GIT
+GITLAB_API_URL="https://gitlab.com/api/v4/{PATH}"
+GITLAB_URL = "https://gitlab.com/{PATH}"
+
 # GIT
-USERNAME = os.getenv('GITHUB_USERNAME')
-REPOSITORY = os.getenv('GITHUB_REPOSITORY')
-PROJECT_ID = os.getenv('GITHUB_PROJECT_ID')
+USERNAME = os.getenv('GIT_USERNAME')
+REPOSITORY = os.getenv('GIT_REPOSITORY')
+PROJECT_ID = os.getenv('GIT_PROJECT_ID')
 
 # Check is DEV_MODE
-DEVMODE = sys.argv[1] == "dev" if len(sys.argv) > 1 else False
+DEV_MODE = sys.argv[1] == "dev" if len(sys.argv) > 1 else False
 BYPASS = sys.argv[2] == "bypass" if len(sys.argv) > 2 else False
 SKIP_DOWNLOAD = sys.argv[3] == "skip_download" if len(sys.argv) > 3 else False
 
@@ -81,7 +82,7 @@ async def main():
     EXPORT_DATA = {}
 
     LOGGER.debug(f"Fetching commits from Git. [{USERNAME}/{REPOSITORY}]")
-    response = await request(GIT2.format(PATH=f"/projects/{PROJECT_ID}/repository/commits"))
+    response = await request(GITLAB_API_URL.format(PATH=f"/projects/{PROJECT_ID}/repository/commits"))
     # print(response)
 
     # Check SHA of last commit
@@ -111,7 +112,7 @@ async def main():
                 continue
 
             await download_json(
-                url=RAW_GIT2.format(PATH=f"{USERNAME}/{REPOSITORY}/-/raw/master/{os.getenv('FOLDER')}/{filename}"), 
+                url=GITLAB_URL.format(PATH=f"{USERNAME}/{REPOSITORY}/-/raw/master/{os.getenv('FOLDER')}/{filename}"), 
                 filename=filename, 
                 path=os.path.join("raw", "data")
             )
@@ -119,10 +120,10 @@ async def main():
     await asyncio.sleep(1)
 
     if not SKIP_DOWNLOAD:
-        langPath = await request(GIT2.format(PATH=f"/projects/{PROJECT_ID}/repository/tree?recursive=true&path={os.getenv('LANG_FOLDER')}"))
+        langPath = await request(GITLAB_API_URL.format(PATH=f"/projects/{PROJECT_ID}/repository/tree?recursive=true&path={os.getenv('LANG_FOLDER')}"))
         for lang in langPath:
             await download_json(
-                url=RAW_GIT2.format(PATH=f"{USERNAME}/{REPOSITORY}/-/raw/master/{lang['path']}"),
+                url=GITLAB_URL.format(PATH=f"{USERNAME}/{REPOSITORY}/-/raw/master/{lang['path']}"),
                 filename=lang["name"],
                 path=os.path.join("raw", "langs")
             )
@@ -411,7 +412,7 @@ async def main():
             await create_lang(EXPORT_DATA[key], f"{key}.json", False if key in ["fight_props"] else True)  
 
     # Push to github
-    if not DEVMODE:
+    if not DEV_MODE:
         await push_to_github(f"""{last_message}
     - SHA: *********{last_commit[10:15]}************
     - URL: [private]
