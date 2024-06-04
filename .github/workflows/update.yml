@@ -1,8 +1,6 @@
 name: Update Data
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   workflow_dispatch:
 
 permissions:
@@ -27,4 +25,25 @@ jobs:
         run: poetry install --no-root
 
       - name: Update data
-        run: poetry run python main.py
+        run: |
+          git config user.name 'GitHub Runner'
+          poetry run python main.py
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_REPOSITORY: ${{ secrets.GIT_REPOSITORY }}
+          GIT_PROJECT_ID: ${{ secrets.GIT_PROJECT_ID }}
+          FOLDER: ExcelBinOutput
+          LANG_FOLDER: TextMap
+          AVATAR: AvatarExcelConfigData.json
+          COSTUME: AvatarCostumeExcelConfigData.json
+          SKILLDEPOT: AvatarSkillDepotExcelConfigData.json
+          SKILLS: AvatarSkillExcelConfigData.json
+          TALENTS: AvatarTalentExcelConfigData.json
+          ARTIFACTS: ReliquaryExcelConfigData.json
+          WEAPONS: WeaponExcelConfigData.json
+          ARTIFACTS_SETS: EquipAffixExcelConfigData.json
+          FIGHT_PROPS: ManualTextMapConfigData.json
+          PROPS_MAP: ProudSkillExcelConfigData.json
+          NAMECARDS: MaterialExcelConfigData.json
+          ARTIFACT_PROPS_MAIN: ReliquaryMainPropExcelConfigData.json
+          ARTIFACT_PROPS_SUB: ReliquaryAffixExcelConfigData.json
