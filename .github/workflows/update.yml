@@ -26,7 +26,8 @@ jobs:
 
       - name: Update data
         run: |
-          git config user.name 'GitHub Runner'
+          git config user.name "github-actions[bot]"
+          git config user.email github-actions[bot]@users.noreply.github.com
           poetry run python main.py
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
@@ -47,3 +48,4 @@ jobs:
           NAMECARDS: MaterialExcelConfigData.json
           ARTIFACT_PROPS_MAIN: ReliquaryMainPropExcelConfigData.json
           ARTIFACT_PROPS_SUB: ReliquaryAffixExcelConfigData.json
+          PROFILE_PICTURES: ProfilePictureExcelConfigData.json

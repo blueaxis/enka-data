@@ -51,9 +51,10 @@ ENVKEY = [
     "COSTUME",
     "PROPS_MAP",
     "ARTIFACT_PROPS_MAIN",
-    "ARTIFACT_PROPS_SUB"
+    "ARTIFACT_PROPS_SUB",
+    "PROFILE_PICTURES",
 ]
-SKIP_HASH = ["artifact_props"]
+SKIP_HASH = ["artifact_props", "avatars"]
 
 LANGS = {}
 DATA = {}
@@ -398,6 +399,13 @@ async def main():
                 })
         
             EXPORT_DATA["characters"][avatar["id"]] = AVATAR
+
+    EXPORT_DATA["avatars"] = {}
+    for profilePictureData in DATA["ProfilePictureExcelConfigData"]:
+        EXPORT_DATA["avatars"][profilePictureData["id"]] = {
+            "icon": profilePictureData["iconPath"],
+            "unlockParam": profilePictureData["unlockParam"],
+        }
 
     LOGGER.debug("Exporting data...")
     for key in EXPORT_DATA:
