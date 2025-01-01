@@ -45,7 +45,6 @@ ENVKEY = [
     "TALENTS",
     "ARTIFACTS",
     "WEAPONS",
-    "FIGHT_PROPS",
     "NAMECARDS",
     "ARTIFACTS_SETS",
     "COSTUME",
@@ -252,17 +251,6 @@ async def main():
             "picPath": namecard["picPath"],
             "rankLevel": namecard["rankLevel"],
             "materialType": namecard["materialType"],
-        }
-
-    # Load fight props
-    for fight_prop in filter(lambda a: a['textMapId'].startswith("FIGHT_PROP"), DATA["ManualTextMapConfigData"]):
-        LOGGER.debug(f"Getting FIGHT_PROP {fight_prop['textMapId']}...")
-
-        if not "fight_props" in EXPORT_DATA:
-            EXPORT_DATA["fight_props"] = {}
-
-        EXPORT_DATA["fight_props"][fight_prop["textMapId"]] = {
-            "nameTextMapHash": fight_prop["textMapContentTextMapHash"],
         }
 
     # Prepare data (Create language)
